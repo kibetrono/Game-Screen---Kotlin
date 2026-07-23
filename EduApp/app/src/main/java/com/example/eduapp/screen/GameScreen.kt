@@ -26,6 +26,7 @@ import com.example.eduapp.helper.rememberAssetImage
 
 @Composable
 fun GameScreen(currentContext: Context, navController: NavHostController,
+//               imagePath: String = "2/level02_pic03_4.jpg",
                imagePath: String = "2/level02_pic03_4.jpg",
                modifier: Modifier = Modifier) {
     val imageBitmap = rememberAssetImage(imagePath)
