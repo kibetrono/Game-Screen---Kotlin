@@ -12,6 +12,7 @@ import com.example.eduapp.network.CloudSyncRepository
 import com.example.eduapp.network.NumbersApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import android.util.Log
 
 /**
  * Handles everything about saved results: reading history, saving a new result
@@ -88,9 +89,15 @@ class AppViewModel(
             scoreTrivia = try {
                 numbersApiService.getFact(number).text
             } catch (e: Exception) {
+                Log.w(TAG, "Failed to fetch score trivia for $number", e)
                 null // Offline or API unavailable - Score screen just hides the trivia line.
             }
             scoreTriviaLoading = false
         }
     }
+
+    companion object {
+        private const val TAG = "AppViewModel"
+    }
+
 }
