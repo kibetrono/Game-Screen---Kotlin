@@ -2,10 +2,13 @@ package com.example.eduapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Brand palette - matches the app launcher icon (indigo background, amber accent)
+val BrandIndigo = Color(0xFF4A47E0)
+val BrandIndigoDark = Color(0xFF322FA8)
+val BrandIndigoLight = Color(0xFFE4E3FB)
+val BrandAmber = Color(0xFFFFC94A)
+val BrandAmberDark = Color(0xFFC79A2E)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val OnBrandIndigo = Color(0xFFFFFFFF)
+val NeutralSurfaceLight = Color(0xFFFDFBFF)
+val NeutralSurfaceDark = Color(0xFF141318)
