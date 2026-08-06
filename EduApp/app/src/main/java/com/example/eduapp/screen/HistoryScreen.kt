@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +40,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+private enum class SortOption(val label: String) {
+    NEWEST("Newest"),
+    HIGHEST_SCORE("Highest Score")
+}
+
 //History screen: shows every past game result, most recent first.
 //Reads from the shared AppViewModel/AppDatabase singleton (no more per-screen DB setup).
 //Safety: both "clear all" and per-entry delete require confirmation; edit is a
@@ -52,6 +58,14 @@ fun HistoryScreen(
 ) {
     val users by appViewModel.users.collectAsStateWithLifecycle(initialValue = emptyList())
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault()) }
+
+    var sortOption by remember { mutableStateOf(SortOption.NEWEST) }
+    // users already comes out of the DB sorted newest-first (see AppDao.getAllUsers),
+    // so "Newest" needs no extra work here - only re-sort when Highest Score is picked.
+    val sortedUsers = when (sortOption) {
+        SortOption.NEWEST -> users
+        SortOption.HIGHEST_SCORE -> users.sortedByDescending { it.score }
+    }
 
     var clearAllPending by remember { mutableStateOf(false) }
     var entryPendingDelete by remember { mutableStateOf<User?>(null) }
@@ -80,6 +94,21 @@ fun HistoryScreen(
                 Text("Clear History")
             }
 
+            if (users.isNotEmpty()) {
+                Row(
+                    modifier = Modifier.padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    SortOption.entries.forEach { option ->
+                        FilterChip(
+                            selected = sortOption == option,
+                            onClick = { sortOption = option },
+                            label = { Text(option.label) }
+                        )
+                    }
+                }
+            }
+
             if (users.isEmpty()) {
                 Text(
                     text = "No games played yet.",
@@ -90,7 +119,7 @@ fun HistoryScreen(
                     modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(users, key = { it.id }) { user ->
+                    items(sortedUsers, key = { it.id }) { user ->
                         Card(modifier = Modifier.fillMaxWidth()) {
                             Row(
                                 modifier = Modifier
