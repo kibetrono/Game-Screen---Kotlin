@@ -118,8 +118,7 @@ fun SettingScreen(
                     FilterChip(
                         selected = session.selectedLevel == level,
                         onClick = { session.selectedLevel = level },
-
-                        label = { Text("L -  $level", modifier = Modifier.padding(horizontal = 2.dp)) }
+                        label = { Text("Level $level") }
                     )
                 }
             }

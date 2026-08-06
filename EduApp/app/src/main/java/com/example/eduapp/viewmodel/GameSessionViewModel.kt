@@ -34,6 +34,10 @@ class GameSessionViewModel : ViewModel() {
     val currentPuzzle: Puzzle? get() = puzzles.getOrNull(currentPuzzleIndex)
     val isLastPuzzle: Boolean get() = currentPuzzleIndex >= puzzles.size - 1
 
+    fun resetForNewSetup() {
+        username = ""
+    }
+
     /** Call when the player presses "Start Game" on the Setting screen. */
     fun startGame() {
         // App functionality: random - puzzles are shuffled so replaying a level

@@ -85,6 +85,7 @@ fun ScoreScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(onClick = {
+                session.resetForNewSetup()
                 navController.navigate("landing") {
                     popUpTo("landing") { inclusive = true }
                 }
