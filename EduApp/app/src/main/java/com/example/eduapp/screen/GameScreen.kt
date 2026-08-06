@@ -58,8 +58,6 @@ fun GameScreen(
         onDispose { soundManager.release() }
     }
 
-    // rememberSaveable (not plain remember) so a typed-but-not-submitted answer,
-    // and whether this puzzle was already answered, survive a screen rotation.
     var answerText by rememberSaveable(session.currentPuzzleIndex) { mutableStateOf("") }
     var feedback by rememberSaveable(session.currentPuzzleIndex) { mutableStateOf<Boolean?>(null) }
 
